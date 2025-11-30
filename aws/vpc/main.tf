@@ -34,6 +34,7 @@ resource "aws_vpc" "ipam-vpc" {
 }
 
 resource "aws_vpc" "main" {
+  count = var.enable_ipam == false ? 1 : 0
   cidr_block = "10.0.0.0/16"
 
   tags = {
