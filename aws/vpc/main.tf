@@ -10,7 +10,7 @@ resource "aws_vpc_ipam" "ipam-vpc" {
 resource "aws_vpc_ipam_pool" "ipam-vpc" {
   count = var.enable_ipam == true ? 1 : 0
   address_family = "ipv4"
-  ipam_scope_id  = aws_vpc_ipam.ipam-vpc.private_default_scope_id
+  ipam_scope_id  = aws_vpc_ipam.ipam-vpc[count.index].private_default_scope_id
   locale         = data.aws_region.current.region
 }
 
