@@ -16,13 +16,13 @@ resource "aws_vpc_ipam_pool" "ipam-vpc" {
 
 resource "aws_vpc_ipam_pool_cidr" "ipam-vpc" {
   count = var.enable_ipam == true ? 1 : 0
-  ipam_pool_id = aws_vpc_ipam_pool.ipam-vpc.id
+  ipam_pool_id = aws_vpc_ipam_pool.ipam-vpc[count.index].id
   cidr         = "172.20.0.0/16"
 }
 
 resource "aws_vpc" "ipam-vpc" {
   count = var.enable_ipam == true ? 1 : 0
-  ipv4_ipam_pool_id   = aws_vpc_ipam_pool.ipam-vpc.id
+  ipv4_ipam_pool_id   = aws_vpc_ipam_pool[count.index].ipam-vpc.id
   ipv4_netmask_length = 28
   depends_on = [
     aws_vpc_ipam_pool_cidr.ipam-vpc
